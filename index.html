@@ -62,6 +62,7 @@
     </style>
 
     <script src="/d3.v3.js"></script>
+    <script src="/parsers/x.js"></script>
   </head>
 
   <body role="document">
@@ -106,7 +107,9 @@
       <div class="jumbotron">
         <h1>Instantly show upward trends.</h1>
         <p>No real data needed. Choose the axes names and create.</p>
-        <p><a href="#create" class="btn btn-primary btn-lg" role="button">Build your graph now &raquo;</a></p>
+        <p><a href="#create" class="btn btn-success btn-lg" role="button">Build your graph now &raquo;</a>
+           <a href="#create" onclick="createExample();" class="btn btn-info btn-lg" role="button">See an example &raquo;</a>
+        </p>
       </div>
 
       <div id="create" class="page-header">
@@ -221,12 +224,102 @@ function generateMultiData(points,numSeries)
   return series;
 }
 
+function generateDateSteps(from, to, increment)
+{
+  dates = [from]
+  while(dates[dates.length-1] < to)
+  {
+    dates.push(new Date(dates[dates.length-1].getTime()+increment));
+    console.log(dates);
+    console.log(dates[dates.length-1]);
+  }
+  return dates;
+}
+
 function getXValues(input)
 {
   //if dates parse as dates
   //if numbers parse as numbers
   //else return string
-  return [new Date("1960"),new Date("1970"),new Date("1980"),new Date("1990"),new Date("2000")];
+  var parsedInput = xaxisparser.parse(input);
+  console.log(parsedInput);
+  var title = null, ticks = null, showticks = null, tickformat = null, istime = false;
+  //TODO: Reformat this function
+  if(parsedInput.type == "DATE")
+  {
+    period = parsedInput.to - parsedInput.from;
+    //if more than 50 years
+    if(period < 6311433600000 & period > 1577923200000)
+    {
+      //decades
+      ticks = generateDateSteps(parsedInput.from,parsedInput.to,315619200000);
+      istime = true;
+      tickformat = "%Y";
+    }
+    //if more than 20 years
+    else if(period > 631152000000)
+    {
+      //5 years
+      ticks = generateDateSteps(parsedInput.from,parsedInput.to,157852800000);
+      istime = true;
+      tickformat = "%Y";
+    }
+    //if more than 10 years
+    else if(period > 315619200000)
+    {
+      //2 years
+      ticks = generateDateSteps(parsedInput.from,parsedInput.to,63158400000);
+      istime = true;
+      tickformat = "%Y";
+    }
+    //if more than 5 years
+    else if(period > 157852800000)
+    {
+      //1 year
+      ticks = generateDateSteps(parsedInput.from,parsedInput.to,31622400000);
+      istime = true;
+      tickformat = "%Y";
+    }
+    //if more than 2 years
+    else if(period > 157852800000)
+    {
+      //6 monthes
+      ticks = generateDateSteps(parsedInput.from,parsedInput.to,15901200000);
+      istime = true;
+      tickformat = "%y-%b";
+    }
+    //if more than 1 year
+    else if(period > 31622400000)
+    {
+      //2 months
+      ticks = generateDateSteps(parsedInput.from,parsedInput.to,5270400000);
+      istime = true;
+      tickformat = "%y-%b";
+    }
+    //if more than 6 months
+    else if(period > 15901200000)
+    {
+      //1 month
+      ticks = generateDateSteps(parsedInput.from,parsedInput.to,2678400000);
+      istime = true;
+      tickformat = "%y-%b";
+    }
+    else
+    {
+      title = input;
+      ticks = [0,1,2,3,4,5,6,7,8,9];
+      showticks = false;
+    }
+  }
+  else
+  {
+    title = parsedInput.label;
+    ticks = [0,1,2,3,4,5,6,7,8,9];
+    showticks = false;
+  }
+  console.log({title:title, ticks:ticks, showticks:showticks, tickformat:tickformat, istime:istime})
+  return {title:title, ticks:ticks, showticks:showticks, tickformat:tickformat, istime:istime};
+  //return [new Date("1960"),new Date("1970"),new Date("1980"),new Date("1990"),new Date("2000")];
 }
 
 function getSeries(input)
@@ -287,8 +380,14 @@ function createGraph()
   //xValues are either dates or a label
   var xValues = getXValues($("#xAxis").val());
   var series = getSeries($("#yAxis").val());
+  if(xValues == "" & series == "")
+  {
+    //TODO: Flash error
+    return createExample();
+  }
+
   //yValues is one or more labels 
-  var yValues = generateMultiData(xValues.length,series.length);
+  var yValues = generateMultiData(xValues.ticks.length,series.length);
 
   var colors = randomElementFromArray(COLORS[series.length-1]);
 
@@ -324,16 +423,15 @@ function createGraph()
     if(chartType == "LINE")
     {
       xAxis.scale(x)
-        .orient("bottom")
-        .ticks(d3.time.years, 10);
+        .orient("bottom");
     }
     else
     {
     //The Bars
-      xAxis.scale(x0)
-        .orient("bottom")
-        .ticks(d3.time.years, 10)
-        .tickFormat(d3.time.format("%Y"));
+      scale = xAxis.scale(x0)
+        .orient("bottom");
+      if(xValues.tickformat)
+        scale.tickFormat(d3.time.format(xValues.tickformat));
     }
     var yAxis = d3.svg.axis()
       .scale(y)
@@ -341,12 +439,12 @@ function createGraph()
       .orient("left")
       .tickValues([]);
 
-    multiData = transformMultiDataForD3(xValues,yValues,series);
+    multiData = transformMultiDataForD3(xValues.ticks,yValues,series);
 
-    x.domain(d3.extent(xValues));
+    x.domain(d3.extent(xValues.ticks));
     y.domain([0, 1]);
 
-    x0.domain(xValues);
+    x0.domain(xValues.ticks);
     x1.domain(series).rangeRoundBands([0, x0.rangeBand()]);
   
     //Create render functions
