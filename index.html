@@ -61,8 +61,39 @@
 
     </style>
 
+    <style>
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 60px;
+}
+#footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 60px;
+  background-color: #f5f5f5;
+}
+
+.fcontainer {
+  width: auto;
+  max-width: 900px;
+  padding: 0 15px;
+}
+.fcontainer .text-muted {
+  margin: 20px 0;
+}
+    </style>
+
     <script src="/d3.v3.js"></script>
     <script src="/parsers/x.js"></script>
+    <script src="/parsers/y.js"></script>
   </head>
 
   <body role="document">
@@ -71,33 +102,8 @@
     <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container">
         <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
           <a class="navbar-brand" href="#">Graphs That Go Up!</a>
         </div>
-        <!--div class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#contact">Contact</a></li>
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <li><a href="#">Action</a></li>
-                <li><a href="#">Another action</a></li>
-                <li><a href="#">Something else here</a></li>
-                <li class="divider"></li>
-                <li class="dropdown-header">Nav header</li>
-                <li><a href="#">Separated link</a></li>
-                <li><a href="#">One more separated link</a></li>
-              </ul>
-            </li>
-          </ul>
-        </div--><!--/.nav-collapse -->
       </div>
     </div>
 
@@ -107,8 +113,8 @@
       <div class="jumbotron">
         <h1>Instantly show upward trends.</h1>
         <p>No real data needed. Choose the axes names and create.</p>
-        <p><a href="#create" class="btn btn-success btn-lg" role="button">Build your graph now &raquo;</a>
-           <a href="#create" onclick="createExample();" class="btn btn-info btn-lg" role="button">See an example &raquo;</a>
+        <p><a onClick="scrollToElement('#create');" class="btn btn-success btn-lg" role="button">Build your graph now!</a>
+           <a onclick="createExample();scrollToElement('#create');" class="btn btn-info btn-lg" role="button">See an example &raquo;</a>
         </p>
       </div>
 
@@ -116,42 +122,59 @@
         <h1>Create your graph...</h1>
       </div>
 
-<p>
-  <form class="form-inline" role="form">
-    <div class="form-group">
-      <h3>
-        <span class="label label-primary">X Axis</span>
-        <label class="sr-only" for="xAxis">1980 to 2010</label>
-        <input type="text" class="form-control" id="xAxis" placeholder="1980 to 2010">
-      </h3>
-    </div>
-    <div class="form-group">
-      <h3>
-        <span class="label label-primary">Y Axis</span>
-        <label class="sr-only" for="yAxis">Temperature</label>
-        <input type="text" class="form-control" id="yAxis" placeholder="Temperature">
-      </h3>
-    </div>
-    <div class="form-group">
-      <h3>
-        <button type="button" class="btn btn-success" onclick="createGraph();">Create</button>
-      </h3>
-    </div>
-    <div class="form-group">
-      <h3>
-        <button type="button" class="btn btn-info" onclick="createExample();">Example »</button>
-      </h3>
-    </div>
-  </form>
-</p>
+      <p>
+        <form class="form-inline" role="form">
+          <div class="form-group">
+            <h3>
+              <span class="label label-primary">X Axis</span>
+              <label class="sr-only" for="xAxis">1980 to 2010</label>
+              <input type="text" class="form-control" id="xAxis" placeholder="1980 to 2010">
+            </h3>
+          </div>
+          <div class="form-group">
+            <h3>
+              <span class="label label-primary">Y Axis</span>
+              <label class="sr-only" for="yAxis">Temperature</label>
+              <input type="text" class="form-control" id="yAxis" placeholder="Temperature">
+            </h3>
+          </div>
+          <div class="form-group">
+            <h3>
+              <a class="btn btn-success" onclick="reCreateGraph();" role="button">Create!</a>
+            </h3>
+          </div>
+          <div class="form-group">
+            <h3>
+              <a class="btn btn-info" onclick="createExample();" role="button">Example &raquo;</a>
+            </h3>
+          </div>
+        </form>
+      </p>
 
-<p id="graph">
-</p>
+      <div class="well">
+        <div id="instructions" class="panel panel-default"
+          style="position:absolute;width:60%;background: rgba(255, 255, 255, .8);">
+          <div class="panel-body">
+            To create your first graph, fill in the x axis box and y axis box. Then just click create! Keep clicking create until your happy with the graph. Or to see an example, click the example button.
+          </div>
+        </div>
+
+        <p id="graph">
+        </p>
+      </div>
+    </div>
+
+    <div id="footer">
+      <div class="fcontainer">
+        <p class="text-muted">Graphs That Go Up is a parody by <a href="http://numenore.co.uk">Simon Overell</a>. He's on <a href="https://twitter.com/seo01">twitter</a> and <a href="https://github.com/seo01">github</a>, if you like that sort of thing.</p>
+      </div>
+    </div>
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="/jquery.min.js"></script>
+    <script src="/seedrandom.js"></script>
     <script src="/dist/js/bootstrap.min.js"></script>
     <script src="/docs/assets/js/docs.min.js"></script>
 <script>
@@ -159,7 +182,8 @@
 var COLORS = 
   [
     [["#66c2a4"],["#8c96c6"],["#7bccc4"],["#238b45"],["#88419d"]],
-    [["#66c2a4","#238b45"],["#8c96c6","#88419d"],["#7bccc4","#2b8cbe"]]
+    [["#66c2a4","#238b45"],["#8c96c6","#88419d"],["#7bccc4","#2b8cbe"]],
+    [["#66c2a4","#238b45","#8c96c6"],["#88419d","#7bccc4","#2b8cbe"]]
   ];
 
 var ALGO = ["LINEAR", "EXPO", "HOCKY"];
@@ -168,13 +192,23 @@ var CHARTTYPE = ["BAR","LINE"];
 
 var EXAMPLES =
   [
-    ["1960 to 2010", "Temperatures vs Sea Level"],
+    ["1960 to 2010", "Temperatures vs \"Sea Level\""],
     ["2013", "Users, Revenue and Profit"],
-    ["2004 to 2014", "AAPL Market Cap. vs GOOG Market Cap"],
-    ["2000 to 2013", "Wealth of top 1% vs # of foodbanks"]
+    ["2004 to 2014", "\"AAPL Market Cap\" vs \"GOOG Market Cap\""],
+    ["2000 to 2013", "\"Wealth of top 1%\" vs \"# of foodbanks\""],
+    ["vaccines","autism"]
   ];
 
 var exampleIndex = 0;
+
+var animateOut = null;
+
+function scrollToElement(element)
+{
+  $('html, body').animate({
+    scrollTop: $(element).offset().top-55
+ }, 1000);
+}
 
 function randomElementFromArray(items)
 {
@@ -236,6 +270,13 @@ function generateDateSteps(from, to, increment)
   return dates;
 }
 
+var DATE_PERIODS = [6311433600000,1577923200000,631152000000,315619200000,157852800000,
+  63158400000,31622400000,15901200000,5270400000,2678400000];
+var DATE_FORMATS = ["%Y","%Y","%Y","%Y","%Y",
+  "%Y","%Y","%y-%b","%y-%b","%y-%b"]
+
+var TARGET_RANGE = [3,12];
+
 function getXValues(input)
 {
   //if dates parse as dates
@@ -244,67 +285,23 @@ function getXValues(input)
   var parsedInput = xaxisparser.parse(input);
   console.log(parsedInput);
   var title = null, ticks = null, showticks = null, tickformat = null, istime = false;
-  //TODO: Reformat this function
   if(parsedInput.type == "DATE")
   {
     period = parsedInput.to - parsedInput.from;
-    //if more than 50 years
-    if(period < 6311433600000 & period > 1577923200000)
+    for(var i = 0; i < DATE_PERIODS.length; i++)
     {
-      //decades
-      ticks = generateDateSteps(parsedInput.from,parsedInput.to,315619200000);
-      istime = true;
-      tickformat = "%Y";
+      var testPeriod = DATE_PERIODS[i];
+      console.log(period/testPeriod);
+      if(period/testPeriod >= TARGET_RANGE[0] & period/testPeriod <= TARGET_RANGE[1])
+      {
+        ticks = generateDateSteps(parsedInput.from,parsedInput.to,testPeriod);
+        istime = true;
+        tickformat = DATE_FORMATS[i];
+        showticks = true;
+        break;
+      }
     }
-    //if more than 20 years
-    else if(period > 631152000000)
-    {
-      //5 years
-      ticks = generateDateSteps(parsedInput.from,parsedInput.to,157852800000);
-      istime = true;
-      tickformat = "%Y";
-    }
-    //if more than 10 years
-    else if(period > 315619200000)
-    {
-      //2 years
-      ticks = generateDateSteps(parsedInput.from,parsedInput.to,63158400000);
-      istime = true;
-      tickformat = "%Y";
-    }
-    //if more than 5 years
-    else if(period > 157852800000)
-    {
-      //1 year
-      ticks = generateDateSteps(parsedInput.from,parsedInput.to,31622400000);
-      istime = true;
-      tickformat = "%Y";
-    }
-    //if more than 2 years
-    else if(period > 157852800000)
-    {
-      //6 monthes
-      ticks = generateDateSteps(parsedInput.from,parsedInput.to,15901200000);
-      istime = true;
-      tickformat = "%y-%b";
-    }
-    //if more than 1 year
-    else if(period > 31622400000)
-    {
-      //2 months
-      ticks = generateDateSteps(parsedInput.from,parsedInput.to,5270400000);
-      istime = true;
-      tickformat = "%y-%b";
-    }
-    //if more than 6 months
-    else if(period > 15901200000)
-    {
-      //1 month
-      ticks = generateDateSteps(parsedInput.from,parsedInput.to,2678400000);
-      istime = true;
-      tickformat = "%y-%b";
-    }
-    else
+    if(ticks == null)
     {
       title = input;
       ticks = [0,1,2,3,4,5,6,7,8,9];
@@ -319,13 +316,19 @@ function getXValues(input)
   }
   console.log({title:title, ticks:ticks, showticks:showticks, tickformat:tickformat, istime:istime})
   return {title:title, ticks:ticks, showticks:showticks, tickformat:tickformat, istime:istime};
-  //return [new Date("1960"),new Date("1970"),new Date("1980"),new Date("1990"),new Date("2000")];
 }
 
 function getSeries(input)
 {
-  //return ["Temperature"];
-  return ["Temperature", "Sea Level"];
+  try{
+    var parsedInput = yaxisparser.parse(input);
+    console.log(parsedInput);
+    return parsedInput;
+  }
+  catch(err)
+  {
+    return [input];
+  }
 }
 
 function jitter(data)
@@ -372,19 +375,92 @@ function createExample()
   $("#xAxis").val(EXAMPLES[exampleIndex][0]);
   $("#yAxis").val(EXAMPLES[exampleIndex][1]);
 
-  createGraph();
+  reCreateGraph();
 }
 
-function createGraph()
+function writeHash(xval,yval,seed)
 {
-  //xValues are either dates or a label
-  var xValues = getXValues($("#xAxis").val());
-  var series = getSeries($("#yAxis").val());
-  if(xValues == "" & series == "")
+  if(xval != "" & yval != "")
+    window.location.hash = "x="+encodeURIComponent(xval)+"&y="+encodeURIComponent(yval)+
+      "&s="+encodeURIComponent(seed);
+}
+
+function readValueFromHash(value)
+{
+  var args = window.location.hash.substring(1).split("&");
+  for(var i = 0; i < args.length; i++)
   {
-    //TODO: Flash error
+    var parts = args[i].split("=");
+    if(parts[0]==value)
+    {
+      if(parts.length > 1)
+        return decodeURIComponent(parts[1]);
+      else
+        return "";
+    }
+  }
+  return null;
+}
+
+function initGraph()
+{
+  var xval = readValueFromHash("x");
+  var yval = readValueFromHash("y");
+  var seed = readValueFromHash("s");
+
+  if(xval != null & yval != null & seed != null)
+  {
+    $("#xAxis").val(xval);
+    $("#yAxis").val(yval);
+    setTimeout(function () {createGraph(xval,yval,seed);},0);
+    $( "#instructions" ).remove();
+    scrollToElement('#create');
+  }
+  else
+  {
+    createGraph("","","");
+  }
+}
+
+function reCreateGraph()
+{
+  $( "#instructions" ).remove();
+  if(animateOut)
+  {
+    animateOut();
+    setTimeout(createGraph,1000);
+  }
+  else
+  {
+    createGraph();
+  }
+}
+
+function createGraph(xval,yval,seed)
+{
+  if(xval == null)
+  {
+    xval = $("#xAxis").val();
+  }
+  if(yval == null)
+  {
+    yval = $("#yAxis").val();
+  }
+  if(xval == "" & yval == "" & seed == null)
+  {
     return createExample();
   }
+  if(seed == null)
+  {
+    seed = (new Date()).getTime().toString();
+  }
+  Math.seedrandom(seed);
+
+  writeHash(xval,yval,seed);
+
+  //xValues are either dates or a label
+  var xValues = getXValues(xval);
+  var series = getSeries(yval);
 
   //yValues is one or more labels 
   var yValues = generateMultiData(xValues.ticks.length,series.length);
@@ -395,7 +471,7 @@ function createGraph()
 
   renderGraph(xValues,yValues,series,colors,chartType);
 
-  }
+}
 
   function renderGraph(xValues,yValues,series,colors,chartType)
   {
@@ -422,8 +498,12 @@ function createGraph()
     //For Line or area
     if(chartType == "LINE")
     {
-      xAxis.scale(x)
+      scale = xAxis.scale(x)
         .orient("bottom");
+      if(xValues.tickformat)
+        scale.tickFormat(d3.time.format(xValues.tickformat));
+      if(!xValues.showticks)
+        scale.tickValues([]);
     }
     else
     {
@@ -432,6 +512,8 @@ function createGraph()
         .orient("bottom");
       if(xValues.tickformat)
         scale.tickFormat(d3.time.format(xValues.tickformat));
+      if(!xValues.showticks)
+        scale.tickValues([]);
     }
     var yAxis = d3.svg.axis()
       .scale(y)
@@ -452,10 +534,19 @@ function createGraph()
       .x(function(d) { return x(d.xv); })
       .y0(height)
       .y1(function(d) { return y(d.yv); });
+
+    var area0 = d3.svg.area()
+      .x(function(d) { return x(d.xv); })
+      .y0(height)
+      .y1(function(d) { return y(0); });
   
     var line = d3.svg.line()
       .x(function(d) { return x(d.xv); })
       .y(function(d) { return y(d.yv); });
+
+    var line0 = d3.svg.line()
+      .x(function(d) { return x(d.xv); })
+      .y(function(d) { return y(0); });
 
     //Create the SVG
     var svg = d3.select("#graph").append("svg")
@@ -478,8 +569,18 @@ function createGraph()
         svg.append("path")
           .datum(data)
           .attr("class", "area")
-          .attr("d", area)
-          .attr("fill",color(series[i]));
+          .attr("d", area0)
+          .attr("fill",color(series[i]))
+          .transition()
+          .duration(1000)
+          .attr("d", area);
+
+        animateOut = function (){
+          svg.selectAll(".area")
+            .transition()
+            .duration(1000)
+            .attr("d", area0);
+        }
       }
       else
       {
@@ -489,8 +590,17 @@ function createGraph()
           svg.append("path")
             .datum(data)
             .attr("class", "line")
-            .attr("d", line)
-            .attr("stroke",color(series[i]));
+            .attr("d", line0)
+            .attr("stroke",color(series[i]))
+            .transition()
+            .duration(1000)
+            .attr("d", line);
+        }
+        animateOut = function (){
+          svg.selectAll(".line")
+            .transition()
+            .duration(1000)
+            .attr("d", line0);
         }
       }
     }
@@ -505,12 +615,24 @@ function createGraph()
 
       state.selectAll("rect")
         .data(function(d) { return [d]; })
-      .enter().append("rect")
+        .enter().append("rect")
         .attr("width", x1.rangeBand())
         .attr("x", function(d) { return x1(d.series); })
-        .attr("y", function(d) { return y(d.yv); })
+        .attr("y", function(d) { return height; })
+        .attr("height", function(d) { return 0; })
+        .style("fill", function(d) { return color(d.series); })
+        .transition()
+        .duration(1000)
         .attr("height", function(d) { return height - y(d.yv); })
-        .style("fill", function(d) { return color(d.series); });
+        .attr("y", function(d) { return y(d.yv); });
+
+      animateOut = function (){
+        state.selectAll("rect")
+          .transition()
+          .duration(1000)
+          .attr("y", function(d) { return height; })
+          .attr("height", function(d) { return 0; });
+      }
     }
 
     //Add the Axis
@@ -528,6 +650,7 @@ function createGraph()
     {
       svg.append("text")
         .attr("transform", "rotate(-90)")
+        .attr("class", "y label")
         .attr("y", 6)
         .attr("dy", ".71em")
         .style("text-anchor", "end")
@@ -553,8 +676,22 @@ function createGraph()
         .attr("dy", ".35em")
         .text(function(d) { return d; });
     }
+    //label the x axis
+    if(xValues.title)
+    {
+      svg.append("text")
+        .attr("class", "x label")
+        .attr("text-anchor", "end")
+        .attr("x", width-3)
+        .attr("y", height + 15)
+        .text(xValues.title);
+    }
   }
-  createGraph();
+
+  window.onload = function ()
+  {
+    initGraph();
+  }
 </script>
 
 </body>
