@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="docs/assets/ico/favicon.ico">
+    <link rel="icon" href="favicon.png">
 
     <title>Graphs That Go Up!</title>
 
@@ -31,33 +31,23 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+<link href="http://fonts.googleapis.com/css?family=Ubuntu:bold" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=Vollkorn" rel="stylesheet" type="text/css">
 
     <!-- D3 -->
     <style>
       .axis path,
       .axis line {
         fill: none;
-        stroke: #000;
+        stroke: #666;
         shape-rendering: crispEdges;
+        stroke-width: 2;
       }
 
-      //.area {
-      //  fill: steelblue;
-      //}
-
-      .bar {
-  fill: red;
-}
-
-.bar:hover {
-  fill: brown;
-}
-
-.line {
-  fill: none;
-  //stroke: steelblue;
-  stroke-width: 3px;
-}
+  .line {
+    fill: none;
+    stroke-width: 3px;
+  }
 
     </style>
 
@@ -89,11 +79,27 @@ body {
 .fcontainer .text-muted {
   margin: 20px 0;
 }
+
+/*fonts*/
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Ubuntu', Helvetica, Arial, sans-serif;
+}
+p, div {
+    font-family: 'Vollkorn', Georgia, Times, serif;
+}
+
+/*back ground*/
+.jumbotron {
+ background-color: rgba(255,255,255,0.75)
+
+}
     </style>
 
     <script src="/d3.v3.js"></script>
     <script src="/parsers/x.js"></script>
     <script src="/parsers/y.js"></script>
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
   </head>
 
   <body role="document">
@@ -102,7 +108,7 @@ body {
     <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container">
         <div class="navbar-header">
-          <a class="navbar-brand" href="#">Graphs That Go Up!</a>
+          <a class="navbar-brand" href="#" onclick="scrollToElement('.jumbotron');">Graphs That Go Up!</a>
         </div>
       </div>
     </div>
@@ -113,12 +119,12 @@ body {
       <div class="jumbotron">
         <h1>Instantly show upward trends.</h1>
         <p>No real data needed. Choose the axes names and create.</p>
-        <p><a onClick="scrollToElement('#create');" class="btn btn-success btn-lg" role="button">Build your graph now!</a>
-           <a onclick="createExample();scrollToElement('#create');" class="btn btn-info btn-lg" role="button">See an example &raquo;</a>
+        <p><a onClick="scrollToElement('#create');" class="btn btn-success btn-lg" role="button"><span class="glyphicon glyphicon-signal"></span> Build your graph now!</a>
+           <a onclick="createExample();scrollToElement('#create');" class="btn btn-primary btn-lg" role="button">See an example &raquo;</a>
         </p>
       </div>
 
-      <div id="create" class="page-header">
+      <div id="create" class="page-header" style="color:white">
         <h1>Create your graph...</h1>
       </div>
 
@@ -140,12 +146,12 @@ body {
           </div>
           <div class="form-group">
             <h3>
-              <a class="btn btn-success" onclick="reCreateGraph();" role="button">Create!</a>
+              <a class="btn btn-success" onclick="reCreateGraph();scrollToElement('#graph');$('#final').slideDown(1000)" role="button"><span class="glyphicon glyphicon-signal"></span> Create!</a>
             </h3>
           </div>
           <div class="form-group">
             <h3>
-              <a class="btn btn-info" onclick="createExample();" role="button">Example &raquo;</a>
+              <a class="btn btn-primary" onclick="createExample();scrollToElement('#graph');$('#final').slideDown(1000)" role="button">Example &raquo;</a>
             </h3>
           </div>
         </form>
@@ -155,13 +161,45 @@ body {
         <div id="instructions" class="panel panel-default"
           style="position:absolute;width:60%;background: rgba(255, 255, 255, .8);">
           <div class="panel-body">
-            To create your first graph, fill in the x axis box and y axis box. Then just click create! Keep clicking create until your happy with the graph. Or to see an example, click the example button.
+            <h5>
+              To create your first graph, fill in the x axis box and y axis box. Then just click create!<br/><br/>
+              Keep clicking create until you're happy with the graph.<br/><br/>
+              To see an example, click the example button.
+              Look at the examples for different axes ideas.
+            </h5>
           </div>
         </div>
 
         <p id="graph">
         </p>
       </div>
+
+      <div id="final" class="alert alert-info" style="display:none">
+        <form class="form-inline" role="form">
+          <div class="form-group">
+            <h3>
+              <a class="btn btn-success" onclick="reCreateGraph();" role="button"><span class="glyphicon glyphicon-signal"></span> Create again!</a>
+            </h3>
+          </div>
+          <div class="form-group">
+            <h3>
+              <a class="btn btn-primary" onclick="createExample();" role="button">See new example &raquo;</a>
+            </h3>
+          </div>
+          <div class="form-group">
+            <h3>
+              <!-- TODO generate tweet URL -->
+              <a class="btn btn-info" role="button" href="https://twitter.com/intent/tweet?hashtags=graphsthatgoup&text=Check%20out%20this%20graph!&tw_p=tweetbutton&url=http%3A%2F%2Fgraphsthatgoup.com" id="tweetbutton" target="_blank" onclick="console.log('tweet')"><i class="fa fa-twitter fa-lg"></i> Share on Twitter</a>
+            </h3>
+          </div>
+          <!-- TODO: Fix alignment and make text smaller-->
+          <span style="position:relative;top:15px;font-size:smaller;padding-left:5px">
+          <a onclick="showInfo();" id="showinfo">show info</a>
+          <a style="display:none" onclick="hideInfo();" id="hideinfo">hide info</a>
+          </span>
+        </form>
+      </div>
+
     </div>
 
     <div id="footer">
@@ -175,16 +213,23 @@ body {
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="/jquery.min.js"></script>
     <script src="/seedrandom.js"></script>
+     <script src="/colorbrewer.js"></script>
+    <script src="/jquery.backstretch.min.js"></script>
+    
     <script src="/dist/js/bootstrap.min.js"></script>
     <script src="/docs/assets/js/docs.min.js"></script>
 <script>
 
-var COLORS = 
-  [
-    [["#66c2a4"],["#8c96c6"],["#7bccc4"],["#238b45"],["#88419d"]],
-    [["#66c2a4","#238b45"],["#8c96c6","#88419d"],["#7bccc4","#2b8cbe"]],
-    [["#66c2a4","#238b45","#8c96c6"],["#88419d","#7bccc4","#2b8cbe"]]
-  ];
+//Bootstrap
+$.backstretch("mathematics2.jpg");
+
+//var COLORS = 
+//  [
+//    [["#66c2a4"],["#8c96c6"],["#7bccc4"],["#238b45"],["#88419d"]],
+//    [["#66c2a4","#238b45"],["#8c96c6","#88419d"],["#7bccc4","#2b8cbe"]],
+    //[["#66c2a4","#238b45","#8c96c6"],["#88419d","#7bccc4","#2b8cbe"]]
+//    [['rgb(252,141,89)', 'rgb(255,255,191)', 'rgb(153,213,148)']]
+//  ];
 
 var ALGO = ["LINEAR", "EXPO", "HOCKY"];
 
@@ -193,20 +238,31 @@ var CHARTTYPE = ["BAR","LINE"];
 var EXAMPLES =
   [
     ["1960 to 2010", "Temperatures vs \"Sea Level\""],
+    ["Great Power", "Great Responsibility"],
     ["2013", "Users, Revenue and Profit"],
     ["2004 to 2014", "\"AAPL Market Cap\" vs \"GOOG Market Cap\""],
+    ["Number of Cooks","\"Rate of broth spoiling\", \"F-Words\""],
     ["2000 to 2013", "\"Wealth of top 1%\" vs \"# of foodbanks\""],
-    ["vaccines","autism"]
+    ["vaccines","autism"],
+    ["\"Bill Gates\", \"Carlos Slim Helu\", \"Warren Buffet\" and \"Amancio Ortego\"","Billons of dollars"]
   ];
 
 var exampleIndex = 0;
 
-var animateOut = null;
+function showInfo()
+{
+  $( '#instructions' ).slideDown(1000); $( '#showinfo' ).hide(); $( '#hideinfo' ).show();
+}
+
+function hideInfo()
+{
+  $( '#instructions' ).slideUp(1000); $( '#showinfo' ).show(); $( '#hideinfo' ).hide();
+}
 
 function scrollToElement(element)
 {
   $('html, body').animate({
-    scrollTop: $(element).offset().top-55
+    scrollTop: $(element).offset().top-80
  }, 1000);
 }
 
@@ -282,39 +338,47 @@ function getXValues(input)
   //if dates parse as dates
   //if numbers parse as numbers
   //else return string
-  var parsedInput = xaxisparser.parse(input);
-  console.log(parsedInput);
   var title = null, ticks = null, showticks = null, tickformat = null, istime = false;
-  if(parsedInput.type == "DATE")
+  try
   {
-    period = parsedInput.to - parsedInput.from;
-    for(var i = 0; i < DATE_PERIODS.length; i++)
+    var parsedInput = xaxisparser.parse(input);
+    console.log(parsedInput);
+    if(parsedInput.type == "DATE")
     {
-      var testPeriod = DATE_PERIODS[i];
-      console.log(period/testPeriod);
-      if(period/testPeriod >= TARGET_RANGE[0] & period/testPeriod <= TARGET_RANGE[1])
+      period = parsedInput.to - parsedInput.from;
+      for(var i = 0; i < DATE_PERIODS.length; i++)
       {
-        ticks = generateDateSteps(parsedInput.from,parsedInput.to,testPeriod);
-        istime = true;
-        tickformat = DATE_FORMATS[i];
-        showticks = true;
-        break;
+        var testPeriod = DATE_PERIODS[i];
+        console.log(period/testPeriod);
+        if(period/testPeriod >= TARGET_RANGE[0] & period/testPeriod <= TARGET_RANGE[1])
+        {
+          ticks = generateDateSteps(parsedInput.from,parsedInput.to,testPeriod);
+          istime = true;
+          tickformat = DATE_FORMATS[i];
+          showticks = true;
+          break;
+        }
+      }
+      if(ticks == null)
+      {
+        title = input;
+        ticks = [0,1,2,3,4,5,6,7,8,9];
+        showticks = false;
       }
     }
-    if(ticks == null)
+    else
     {
-      title = input;
+      title = parsedInput.label;
       ticks = [0,1,2,3,4,5,6,7,8,9];
       showticks = false;
     }
   }
-  else
+  catch(err)
   {
-    title = parsedInput.label;
+    title = input;
     ticks = [0,1,2,3,4,5,6,7,8,9];
-    showticks = false;
+    showticks = false;;
   }
-  console.log({title:title, ticks:ticks, showticks:showticks, tickformat:tickformat, istime:istime})
   return {title:title, ticks:ticks, showticks:showticks, tickformat:tickformat, istime:istime};
 }
 
@@ -322,7 +386,8 @@ function getSeries(input)
 {
   try{
     var parsedInput = yaxisparser.parse(input);
-    console.log(parsedInput);
+    if(parsedInput.length > 8)
+      return [input];
     return parsedInput;
   }
   catch(err)
@@ -383,6 +448,8 @@ function writeHash(xval,yval,seed)
   if(xval != "" & yval != "")
     window.location.hash = "x="+encodeURIComponent(xval)+"&y="+encodeURIComponent(yval)+
       "&s="+encodeURIComponent(seed);
+  $('#tweetbutton').attr('href','https://twitter.com/intent/tweet?hashtags=graphsthatgoup&text=Check%20out%20this%20graph!&tw_p=tweetbutton&url='+encodeURIComponent(window.location.toString()));
+
 }
 
 function readValueFromHash(value)
@@ -413,8 +480,9 @@ function initGraph()
     $("#xAxis").val(xval);
     $("#yAxis").val(yval);
     setTimeout(function () {createGraph(xval,yval,seed);},0);
-    $( "#instructions" ).remove();
+    hideInfo();
     scrollToElement('#create');
+    $('#final').show();
   }
   else
   {
@@ -424,7 +492,7 @@ function initGraph()
 
 function reCreateGraph()
 {
-  $( "#instructions" ).remove();
+  hideInfo();
   if(animateOut)
   {
     animateOut();
@@ -434,6 +502,31 @@ function reCreateGraph()
   {
     createGraph();
   }
+}
+
+function correctColors(colors)
+{
+  for(var i = 0; i < colors.length; i++)
+  {
+    var color = colors[i];
+    var vals = color.substring(4,color.length-1).split(",");
+    var colorOK = false;
+    for(var j = 0; j < vals.length; j++)
+    {
+      if(vals[j] < 160)
+      {
+        colorOK = true;
+      }
+    }
+    if(! colorOK)
+    {
+      console.log(color);
+      colors[i] = "rgb("+(vals[0]-100)+","+(vals[1]-100)+","+(vals[2]-100)+")";
+    }
+
+  }
+  //
+  return colors;
 }
 
 function createGraph(xval,yval,seed)
@@ -465,13 +558,19 @@ function createGraph(xval,yval,seed)
   //yValues is one or more labels 
   var yValues = generateMultiData(xValues.ticks.length,series.length);
 
-  var colors = randomElementFromArray(COLORS[series.length-1]);
+  //var colors = randomElementFromArray(COLORS[series.length-1]);
+  var colorscheme = randomElementFromArray(Object.keys(colorbrewer));
+  console.log(colorscheme);
+  var colors = correctColors(colorbrewer[colorscheme][Math.max(3,series.length)]);
 
   var chartType = randomElementFromArray(CHARTTYPE);
 
   renderGraph(xValues,yValues,series,colors,chartType);
 
 }
+
+//D3 stuff
+var animateOut = null;
 
   function renderGraph(xValues,yValues,series,colors,chartType)
   {
@@ -499,7 +598,8 @@ function createGraph(xval,yval,seed)
     if(chartType == "LINE")
     {
       scale = xAxis.scale(x)
-        .orient("bottom");
+        .orient("bottom")
+        .tickSize(0);
       if(xValues.tickformat)
         scale.tickFormat(d3.time.format(xValues.tickformat));
       if(!xValues.showticks)
@@ -509,7 +609,8 @@ function createGraph(xval,yval,seed)
     {
     //The Bars
       scale = xAxis.scale(x0)
-        .orient("bottom");
+        .orient("bottom")
+        .tickSize(0);
       if(xValues.tickformat)
         scale.tickFormat(d3.time.format(xValues.tickformat));
       if(!xValues.showticks)
@@ -519,7 +620,8 @@ function createGraph(xval,yval,seed)
       .scale(y)
       .tickFormat("")
       .orient("left")
-      .tickValues([]);
+      .tickValues([])
+      .tickSize(1);
 
     multiData = transformMultiDataForD3(xValues.ticks,yValues,series);
 
