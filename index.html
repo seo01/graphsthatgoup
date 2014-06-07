@@ -14,92 +14,29 @@
     <link href="dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap theme -->
     <link href="dist/css/bootstrap-theme.min.css" rel="stylesheet">
-
     <!-- Custom styles for this template -->
-    <link href="theme.css" rel="stylesheet">
+    <link href="dist/css/theme.css" rel="stylesheet">
 
-    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
-    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
-    <script src="docs/assets/js/ie-emulation-modes-warning.js"></script>
-
+    <script src="dist/js/ie/ie-emulation-modes-warning.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="docs/assets/js/ie10-viewport-bug-workaround.js"></script>
-
+    <script src="dist/js/ie//ie10-viewport-bug-workaround.js"></script>
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-<link href="http://fonts.googleapis.com/css?family=Ubuntu:bold" rel="stylesheet" type="text/css">
-<link href="http://fonts.googleapis.com/css?family=Vollkorn" rel="stylesheet" type="text/css">
-
-    <!-- D3 -->
-    <style>
-      .axis path,
-      .axis line {
-        fill: none;
-        stroke: #666;
-        shape-rendering: crispEdges;
-        stroke-width: 2;
-      }
-
-  .line {
-    fill: none;
-    stroke-width: 3px;
-  }
-
-    </style>
-
-    <style>
-/* Sticky footer styles
--------------------------------------------------- */
-html {
-  position: relative;
-  min-height: 100%;
-}
-body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
-}
-#footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  /* Set the fixed height of the footer here */
-  height: 60px;
-  background-color: #f5f5f5;
-}
-
-.fcontainer {
-  width: auto;
-  max-width: 900px;
-  padding: 0 15px;
-}
-.fcontainer .text-muted {
-  margin: 20px 0;
-}
-
-/*fonts*/
-
-h1, h2, h3, h4, h5, h6, .btn {
-    font-family: 'Ubuntu', Helvetica, Arial, sans-serif;
-}
-p, div {
-    font-family: 'Vollkorn', Georgia, Times, serif;
-}
-
-/*back ground*/
-.jumbotron {
- background-color: rgba(255,255,255,0.75)
-
-}
-    </style>
-
-    <script src="/d3.v3.js"></script>
-    <script src="/parsers/x.js"></script>
-    <script src="/parsers/y.js"></script>
+    <!--Custom Fonts -->
+    <link href="http://fonts.googleapis.com/css?family=Ubuntu:bold" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Vollkorn" rel="stylesheet" type="text/css">
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <!-- Custom D3 -->
+    <link href="dist/css/gtgu-d3.css" rel="stylesheet">
+
+    <!--  Custom Bootstrap -->
+    <link href="dist/css/gtgu-bootstrap.css" rel="stylesheet">
+
   </head>
 
   <body role="document">
@@ -119,12 +56,17 @@ p, div {
       <div class="jumbotron">
         <h1>Instantly show upward trends.</h1>
         <p>No real data needed. Choose the axes names and create.</p>
-        <p><a onClick="scrollToElement('#create');" class="btn btn-success btn-lg" role="button"><span class="glyphicon glyphicon-signal"></span> Build your graph now!</a>
-           <a onclick="createExample();scrollToElement('#create');" class="btn btn-primary btn-lg" role="button">See an example &raquo;</a>
+        <p>
+          <a onClick="scrollToElement('#create');" class="btn btn-success btn-lg" role="button">
+            <span class="glyphicon glyphicon-signal"></span> Build your graph now!
+          </a>
+           <a onclick="createExample();scrollToElement('#create');" class="btn btn-primary btn-lg" role="button">
+            See an example &raquo;
+          </a>
         </p>
       </div>
 
-      <div id="create" class="page-header" style="color:white">
+      <div id="create" class="page-header">
         <h1>Create your graph...</h1>
       </div>
 
@@ -146,20 +88,25 @@ p, div {
           </div>
           <div class="form-group">
             <h3>
-              <a class="btn btn-success" onclick="reCreateGraph();scrollToElement('#graph');$('#final').slideDown(1000)" role="button"><span class="glyphicon glyphicon-signal"></span> Create!</a>
+              <a class="btn btn-success" 
+                onclick="reCreateGraph();scrollToElement('#graph');$('#final').slideDown(1000)" role="button">
+                <span class="glyphicon glyphicon-signal"></span> Create!
+              </a>
             </h3>
           </div>
           <div class="form-group">
             <h3>
-              <a class="btn btn-primary" onclick="createExample();scrollToElement('#graph');$('#final').slideDown(1000)" role="button">Example &raquo;</a>
+              <a class="btn btn-primary" 
+                onclick="createExample();scrollToElement('#graph');$('#final').slideDown(1000)" role="button">
+                Example &raquo;
+              </a>
             </h3>
           </div>
         </form>
       </p>
 
       <div class="well">
-        <div id="instructions" class="panel panel-default"
-          style="position:absolute;width:60%;background: rgba(255, 255, 255, .8);">
+        <div id="instructions" class="panel panel-default">
           <div class="panel-body">
             <h5>
               To create your first graph, fill in the x axis box and y axis box. Then just click create!<br/><br/>
@@ -174,54 +121,85 @@ p, div {
         </p>
       </div>
 
-      <div id="final" class="alert alert-info" style="display:none">
+      <div id="final" class="alert alert-info">
         <form class="form-inline" role="form">
           <div class="form-group">
             <h3>
-              <a class="btn btn-success" onclick="reCreateGraph();" role="button"><span class="glyphicon glyphicon-signal"></span> Create again!</a>
+              <a class="btn btn-success" onclick="reCreateGraph();" role="button">
+                <span class="glyphicon glyphicon-signal"></span> Create again!
+              </a>
             </h3>
           </div>
           <div class="form-group">
             <h3>
-              <a class="btn btn-primary" onclick="createExample();" role="button">See new example &raquo;</a>
+              <a class="btn btn-primary" onclick="createExample();" role="button">
+                See new example &raquo;
+              </a>
             </h3>
           </div>
           <div class="form-group">
             <h3>
-              <!-- TODO generate tweet URL -->
-              <a class="btn btn-info" role="button" href="https://twitter.com/intent/tweet?hashtags=graphsthatgoup&text=Check%20out%20this%20graph!&tw_p=tweetbutton&url=http%3A%2F%2Fgraphsthatgoup.com" id="tweetbutton" target="_blank" onclick="console.log('tweet')"><i class="fa fa-twitter fa-lg"></i> Share on Twitter</a>
+              <!-- Tweet Button -->
+              <a class="btn btn-info" role="button" href="https://twitter.com/intent/tweet?hashtags=graphsthatgoup&text=Check%20out%20this%20graph!&tw_p=tweetbutton&url=http%3A%2F%2Fgraphsthatgoup.com" id="tweetbutton" target="_blank" onclick="console.log('tweet')">
+                <i class="fa fa-twitter fa-lg"></i> Share on Twitter
+              </a>
             </h3>
           </div>
-          <!-- TODO: Fix alignment and make text smaller-->
           <span style="position:relative;top:15px;font-size:smaller;padding-left:5px">
-          <a onclick="showInfo();" id="showinfo">show info</a>
-          <a style="display:none" onclick="hideInfo();" id="hideinfo">hide info</a>
+            <a onclick="showInfo();" id="showinfo">show info</a>
+            <a style="display:none" onclick="hideInfo();" id="hideinfo">hide info</a>
           </span>
         </form>
       </div>
-
     </div>
 
     <div id="footer">
       <div class="fcontainer">
-        <p class="text-muted">Graphs That Go Up is a parody by <a href="http://numenore.co.uk">Simon Overell</a>. He's on <a href="https://twitter.com/seo01">twitter</a> and <a href="https://github.com/seo01">github</a>, if you like that sort of thing.</p>
+        <p class="text-muted">
+          Graphs That Go Up is a parody by <a href="http://numenore.co.uk">Simon Overell</a>. He's on <a href="https://twitter.com/seo01">twitter</a> and <a href="https://github.com/seo01">github</a>, if you like that sort of thing.
+        </p>
       </div>
     </div>
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="/jquery.min.js"></script>
-    <script src="/seedrandom.js"></script>
-     <script src="/colorbrewer.js"></script>
-    <script src="/jquery.backstretch.min.js"></script>
-    
     <script src="/dist/js/bootstrap.min.js"></script>
-    <script src="/docs/assets/js/docs.min.js"></script>
-<script>
+    <script src="/dist/js/docs.min.js"></script>
 
-//Bootstrap
-$.backstretch("mathematics2.jpg");
+    <!-- 3rd Party libraries -->
+    <script src="/dist/js/jquery.min.js"></script>
+    <script src="/dist/js/seedrandom.js"></script>
+    <script src="/dist/js/jquery.backstretch.min.js"></script>
+    <script src="/dist/js/d3.v3.js"></script>
+    <!-- TODO sort colors out -->
+    <script src="/dist/js/colorbrewer.js"></script>
+
+    <!-- Graphs that Go Up JavaScript -->
+    <script src="/dist/js/parsers/x.js"></script>
+    <script src="/dist/js/parsers/y.js"></script>
+
+    <script src="/dist/js/gtgu-bootstrap.js"></script>
+    <script src="/dist/js/gtgu-examples.js"></script>
+    <script src="/dist/js/gtgu-d3.js"></script>
+
+    <!-- Add Background image -->
+    <script>
+      $.backstretch("mathematics2.jpg");
+    </script>
+
+    <!-- Init -->
+    <script>
+      window.onload = function (){initGraph();}
+    </script>
+    <script>
+    /*
+      TODO: Add Google Analytics tracking
+    */
+    </script>
+
+<script>
+//TODO: strip out colors
 
 //var COLORS = 
 //  [
@@ -230,279 +208,6 @@ $.backstretch("mathematics2.jpg");
     //[["#66c2a4","#238b45","#8c96c6"],["#88419d","#7bccc4","#2b8cbe"]]
 //    [['rgb(252,141,89)', 'rgb(255,255,191)', 'rgb(153,213,148)']]
 //  ];
-
-var ALGO = ["LINEAR", "EXPO", "HOCKY"];
-
-var CHARTTYPE = ["BAR","LINE"];
-
-var EXAMPLES =
-  [
-    ["1960 to 2010", "Temperatures vs \"Sea Level\""],
-    ["Great Power", "Great Responsibility"],
-    ["2013", "Users, Revenue and Profit"],
-    ["2004 to 2014", "\"AAPL Market Cap\" vs \"GOOG Market Cap\""],
-    ["Number of Cooks","\"Rate of broth spoiling\", \"F-Words\""],
-    ["2000 to 2013", "\"Wealth of top 1%\" vs \"# of foodbanks\""],
-    ["vaccines","autism"],
-    ["\"Bill Gates\", \"Carlos Slim Helu\", \"Warren Buffet\" and \"Amancio Ortego\"","Billons of dollars"]
-  ];
-
-var exampleIndex = 0;
-
-function showInfo()
-{
-  $( '#instructions' ).slideDown(1000); $( '#showinfo' ).hide(); $( '#hideinfo' ).show();
-}
-
-function hideInfo()
-{
-  $( '#instructions' ).slideUp(1000); $( '#showinfo' ).show(); $( '#hideinfo' ).hide();
-}
-
-function scrollToElement(element)
-{
-  $('html, body').animate({
-    scrollTop: $(element).offset().top-80
- }, 1000);
-}
-
-function randomElementFromArray(items)
-{
-  var item = items[Math.floor(Math.random()*items.length)];
-  return item;
-}
-
-function generateData(points)
-{
-  var algo = randomElementFromArray(ALGO);
-  var data = [];
-  if(algo == "LINEAR") //linear
-  {
-    for(var i = 0; i < points; i++)
-    {
-      data.push(i/(points-0.1) + 0.1);
-    }
-  }
-  else if(algo == "EXPO")
-  {
-    for(var i = 0; i < points; i++)
-    {
-      data.push(Math.pow(i/(points-0.1) + 0.1,3));
-    }
-  }
-  else
-  {
-   for(var i = 0; i < points; i++)
-    {
-      if(i < points-1)
-        data.push(i/(points/0.3-0.1) + 0.1);
-      else
-        data.push(i/(points-0.1) + 0.1);
-    } 
-  }
-
-  return jitter(data);
-}
-
-function generateMultiData(points,numSeries)
-{
-  var series = [];
-  for(var i = 0; i < numSeries; i++)
-  {
-    series.push(generateData(points));
-  }
-  return series;
-}
-
-function generateDateSteps(from, to, increment)
-{
-  dates = [from]
-  while(dates[dates.length-1] < to)
-  {
-    dates.push(new Date(dates[dates.length-1].getTime()+increment));
-    console.log(dates);
-    console.log(dates[dates.length-1]);
-  }
-  return dates;
-}
-
-var DATE_PERIODS = [6311433600000,1577923200000,631152000000,315619200000,157852800000,
-  63158400000,31622400000,15901200000,5270400000,2678400000];
-var DATE_FORMATS = ["%Y","%Y","%Y","%Y","%Y",
-  "%Y","%Y","%y-%b","%y-%b","%y-%b"]
-
-var TARGET_RANGE = [3,12];
-
-function getXValues(input)
-{
-  //if dates parse as dates
-  //if numbers parse as numbers
-  //else return string
-  var title = null, ticks = null, showticks = null, tickformat = null, istime = false;
-  try
-  {
-    var parsedInput = xaxisparser.parse(input);
-    console.log(parsedInput);
-    if(parsedInput.type == "DATE")
-    {
-      period = parsedInput.to - parsedInput.from;
-      for(var i = 0; i < DATE_PERIODS.length; i++)
-      {
-        var testPeriod = DATE_PERIODS[i];
-        console.log(period/testPeriod);
-        if(period/testPeriod >= TARGET_RANGE[0] & period/testPeriod <= TARGET_RANGE[1])
-        {
-          ticks = generateDateSteps(parsedInput.from,parsedInput.to,testPeriod);
-          istime = true;
-          tickformat = DATE_FORMATS[i];
-          showticks = true;
-          break;
-        }
-      }
-      if(ticks == null)
-      {
-        title = input;
-        ticks = [0,1,2,3,4,5,6,7,8,9];
-        showticks = false;
-      }
-    }
-    else
-    {
-      title = parsedInput.label;
-      ticks = [0,1,2,3,4,5,6,7,8,9];
-      showticks = false;
-    }
-  }
-  catch(err)
-  {
-    title = input;
-    ticks = [0,1,2,3,4,5,6,7,8,9];
-    showticks = false;;
-  }
-  return {title:title, ticks:ticks, showticks:showticks, tickformat:tickformat, istime:istime};
-}
-
-function getSeries(input)
-{
-  try{
-    var parsedInput = yaxisparser.parse(input);
-    if(parsedInput.length > 8)
-      return [input];
-    return parsedInput;
-  }
-  catch(err)
-  {
-    return [input];
-  }
-}
-
-function jitter(data)
-{
-  var newData = [];
-  var shift = 0.1*Math.random();
-  for(var i = 0; i < data.length; i++)
-  {
-    newData.push(data[i]*(0.7+0.3*Math.random()+shift));
-  }
-  return newData;
-}
-
-function transformMultiDataForD3(xValues,yValues,series)
-{
-
-  var multiData = [];
-  for (var i = 0; i < yValues.length; i ++)
-  {
-    var data = [];
-    for (var j = 0; j < xValues.length; j++) {
-       data.push({xv:xValues[j],yv:yValues[i][j],series:series[i]});
-    }
-    multiData.push(data);
-  }
-  return multiData;
-}
-
-function flattenMultiData(multiData)
-{
-  var data = [];
-  for (var i = 0; i < multiData.length; i++)
-  {
-    Array.prototype.push.apply(data,multiData[i])
-  }
-  return data;
-}
-
-function createExample()
-{
-  exampleIndex +=1;
-  if(exampleIndex >= EXAMPLES.length)
-    exampleIndex = 0;
-  $("#xAxis").val(EXAMPLES[exampleIndex][0]);
-  $("#yAxis").val(EXAMPLES[exampleIndex][1]);
-
-  reCreateGraph();
-}
-
-function writeHash(xval,yval,seed)
-{
-  if(xval != "" & yval != "")
-    window.location.hash = "x="+encodeURIComponent(xval)+"&y="+encodeURIComponent(yval)+
-      "&s="+encodeURIComponent(seed);
-  $('#tweetbutton').attr('href','https://twitter.com/intent/tweet?hashtags=graphsthatgoup&text=Check%20out%20this%20graph!&tw_p=tweetbutton&url='+encodeURIComponent(window.location.toString()));
-
-}
-
-function readValueFromHash(value)
-{
-  var args = window.location.hash.substring(1).split("&");
-  for(var i = 0; i < args.length; i++)
-  {
-    var parts = args[i].split("=");
-    if(parts[0]==value)
-    {
-      if(parts.length > 1)
-        return decodeURIComponent(parts[1]);
-      else
-        return "";
-    }
-  }
-  return null;
-}
-
-function initGraph()
-{
-  var xval = readValueFromHash("x");
-  var yval = readValueFromHash("y");
-  var seed = readValueFromHash("s");
-
-  if(xval != null & yval != null & seed != null)
-  {
-    $("#xAxis").val(xval);
-    $("#yAxis").val(yval);
-    setTimeout(function () {createGraph(xval,yval,seed);},0);
-    hideInfo();
-    scrollToElement('#create');
-    $('#final').show();
-  }
-  else
-  {
-    createGraph("","","");
-  }
-}
-
-function reCreateGraph()
-{
-  hideInfo();
-  if(animateOut)
-  {
-    animateOut();
-    setTimeout(createGraph,1000);
-  }
-  else
-  {
-    createGraph();
-  }
-}
 
 function correctColors(colors)
 {
@@ -529,272 +234,10 @@ function correctColors(colors)
   return colors;
 }
 
-function createGraph(xval,yval,seed)
-{
-  if(xval == null)
-  {
-    xval = $("#xAxis").val();
-  }
-  if(yval == null)
-  {
-    yval = $("#yAxis").val();
-  }
-  if(xval == "" & yval == "" & seed == null)
-  {
-    return createExample();
-  }
-  if(seed == null)
-  {
-    seed = (new Date()).getTime().toString();
-  }
-  Math.seedrandom(seed);
 
-  writeHash(xval,yval,seed);
-
-  //xValues are either dates or a label
-  var xValues = getXValues(xval);
-  var series = getSeries(yval);
-
-  //yValues is one or more labels 
-  var yValues = generateMultiData(xValues.ticks.length,series.length);
-
-  //var colors = randomElementFromArray(COLORS[series.length-1]);
-  var colorscheme = randomElementFromArray(Object.keys(colorbrewer));
-  console.log(colorscheme);
-  var colors = correctColors(colorbrewer[colorscheme][Math.max(3,series.length)]);
-
-  var chartType = randomElementFromArray(CHARTTYPE);
-
-  renderGraph(xValues,yValues,series,colors,chartType);
-
-}
-
-//D3 stuff
-var animateOut = null;
-
-  function renderGraph(xValues,yValues,series,colors,chartType)
-  {
-    $("#graph").empty();
-
-    var margin = {top: 20, right: 20, bottom: 30, left: 50},
-      width = 500 - margin.left - margin.right,
-      height = 300 - margin.top - margin.bottom;
-
-    var y = d3.scale.linear()
-      .range([height, 0]);
-
-    //For Lines
-    var x = d3.time.scale()
-      .range([0, width]);
-
-    //For Bars
-    var x0 = d3.scale.ordinal()
-      .rangeRoundBands([0, width], .1);
-    var x1 = d3.scale.ordinal();
-
-    var xAxis = d3.svg.axis();
-
-    //For Line or area
-    if(chartType == "LINE")
-    {
-      scale = xAxis.scale(x)
-        .orient("bottom")
-        .tickSize(0);
-      if(xValues.tickformat)
-        scale.tickFormat(d3.time.format(xValues.tickformat));
-      if(!xValues.showticks)
-        scale.tickValues([]);
-    }
-    else
-    {
-    //The Bars
-      scale = xAxis.scale(x0)
-        .orient("bottom")
-        .tickSize(0);
-      if(xValues.tickformat)
-        scale.tickFormat(d3.time.format(xValues.tickformat));
-      if(!xValues.showticks)
-        scale.tickValues([]);
-    }
-    var yAxis = d3.svg.axis()
-      .scale(y)
-      .tickFormat("")
-      .orient("left")
-      .tickValues([])
-      .tickSize(1);
-
-    multiData = transformMultiDataForD3(xValues.ticks,yValues,series);
-
-    x.domain(d3.extent(xValues.ticks));
-    y.domain([0, 1]);
-
-    x0.domain(xValues.ticks);
-    x1.domain(series).rangeRoundBands([0, x0.rangeBand()]);
-  
-    //Create render functions
-    var area = d3.svg.area()
-      .x(function(d) { return x(d.xv); })
-      .y0(height)
-      .y1(function(d) { return y(d.yv); });
-
-    var area0 = d3.svg.area()
-      .x(function(d) { return x(d.xv); })
-      .y0(height)
-      .y1(function(d) { return y(0); });
-  
-    var line = d3.svg.line()
-      .x(function(d) { return x(d.xv); })
-      .y(function(d) { return y(d.yv); });
-
-    var line0 = d3.svg.line()
-      .x(function(d) { return x(d.xv); })
-      .y(function(d) { return y(0); });
-
-    //Create the SVG
-    var svg = d3.select("#graph").append("svg")
-      .attr("width", width + margin.left + margin.right)
-      .attr("height", height + margin.top + margin.bottom)
-      .append("g")
-      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-    //Get random color
-    var color = d3.scale.ordinal()
-      .range(colors);
-
-    //Render the data sets
-    if(chartType == "LINE")
-    {
-      //if there is only one and this is a line chart
-      if(multiData.length ==1)
-      {
-        var data = multiData[0];
-        svg.append("path")
-          .datum(data)
-          .attr("class", "area")
-          .attr("d", area0)
-          .attr("fill",color(series[i]))
-          .transition()
-          .duration(1000)
-          .attr("d", area);
-
-        animateOut = function (){
-          svg.selectAll(".area")
-            .transition()
-            .duration(1000)
-            .attr("d", area0);
-        }
-      }
-      else
-      {
-        for(var i = 0; i < multiData.length; i++)
-        {
-          var data = multiData[i];
-          svg.append("path")
-            .datum(data)
-            .attr("class", "line")
-            .attr("d", line0)
-            .attr("stroke",color(series[i]))
-            .transition()
-            .duration(1000)
-            .attr("d", line);
-        }
-        animateOut = function (){
-          svg.selectAll(".line")
-            .transition()
-            .duration(1000)
-            .attr("d", line0);
-        }
-      }
-    }
-    else{
-      var flatData = flattenMultiData(multiData);
-
-      var state = svg.selectAll(".state")
-        .data(flatData)
-      .enter().append("g")
-        .attr("class", "g")
-        .attr("transform", function(d) { return "translate(" + x0(d.xv) + ",0)"; });
-
-      state.selectAll("rect")
-        .data(function(d) { return [d]; })
-        .enter().append("rect")
-        .attr("width", x1.rangeBand())
-        .attr("x", function(d) { return x1(d.series); })
-        .attr("y", function(d) { return height; })
-        .attr("height", function(d) { return 0; })
-        .style("fill", function(d) { return color(d.series); })
-        .transition()
-        .duration(1000)
-        .attr("height", function(d) { return height - y(d.yv); })
-        .attr("y", function(d) { return y(d.yv); });
-
-      animateOut = function (){
-        state.selectAll("rect")
-          .transition()
-          .duration(1000)
-          .attr("y", function(d) { return height; })
-          .attr("height", function(d) { return 0; });
-      }
-    }
-
-    //Add the Axis
-    svg.append("g")
-      .attr("class", "x axis")
-      .attr("transform", "translate(0," + height + ")")
-      .call(xAxis);
-
-    svg.append("g")
-      .attr("class", "y axis")
-      .call(yAxis);
-
-    //Label the Y axis or add a legend
-    if(series.length == 1)
-    {
-      svg.append("text")
-        .attr("transform", "rotate(-90)")
-        .attr("class", "y label")
-        .attr("y", 6)
-        .attr("dy", ".71em")
-        .style("text-anchor", "end")
-        .text(series[0]);
-    }
-    else
-    {
-      var legend = svg.selectAll(".legend")
-        .data(color.domain().slice().reverse())
-        .enter().append("g")
-        .attr("class", "legend")
-        .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
-
-      legend.append("rect")
-        .attr("x", 6)
-        .attr("width", 18)
-        .attr("height", 18)
-        .style("fill", color);
-
-      legend.append("text")
-        .attr("x", 27)
-        .attr("y", 9)
-        .attr("dy", ".35em")
-        .text(function(d) { return d; });
-    }
-    //label the x axis
-    if(xValues.title)
-    {
-      svg.append("text")
-        .attr("class", "x label")
-        .attr("text-anchor", "end")
-        .attr("x", width-3)
-        .attr("y", height + 15)
-        .text(xValues.title);
-    }
-  }
-
-  window.onload = function ()
-  {
-    initGraph();
-  }
 </script>
 
-</body>
+
+
+  </body>
 </html>

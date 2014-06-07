@@ -1,0 +1,56 @@
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 60px;
+}
+#footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 60px;
+  background-color: #f5f5f5;
+}
+
+.fcontainer {
+  width: auto;
+  max-width: 900px;
+  padding: 0 15px;
+}
+.fcontainer .text-muted {
+  margin: 20px 0;
+}
+
+/*fonts*/
+
+h1, h2, h3, h4, h5, h6, .btn {
+    font-family: 'Ubuntu', Helvetica, Arial, sans-serif;
+}
+p, div {
+    font-family: 'Vollkorn', Georgia, Times, serif;
+}
+
+/*back ground*/
+.jumbotron {
+ background-color: rgba(255,255,255,0.75)
+
+}
+
+#create{
+  color:white;
+}
+
+#instructions{
+  position:absolute;
+  width:60%;
+  background: rgba(255, 255, 255, .8);
+}
+
+#final{
+  display:none;
+}
