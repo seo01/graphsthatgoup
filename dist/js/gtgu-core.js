@@ -59,8 +59,6 @@ function generateDateSteps(from, to, increment)
   while(dates[dates.length-1] < to)
   {
     dates.push(new Date(dates[dates.length-1].getTime()+increment));
-    console.log(dates);
-    console.log(dates[dates.length-1]);
   }
   return dates;
 }
@@ -81,14 +79,12 @@ function getXValues(input)
   try
   {
     var parsedInput = xaxisparser.parse(input);
-    console.log(parsedInput);
     if(parsedInput.type == "DATE")
     {
       period = parsedInput.to - parsedInput.from;
       for(var i = 0; i < DATE_PERIODS.length; i++)
       {
         var testPeriod = DATE_PERIODS[i];
-        console.log(period/testPeriod);
         if(period/testPeriod >= TARGET_RANGE[0] & period/testPeriod <= TARGET_RANGE[1])
         {
           ticks = generateDateSteps(parsedInput.from,parsedInput.to,testPeriod);
@@ -99,6 +95,23 @@ function getXValues(input)
         }
       }
       if(ticks == null)
+      {
+        title = input;
+        ticks = [0,1,2,3,4,5,6,7,8,9];
+        showticks = false;
+      }
+    }
+    else if(parsedInput.type == "LIST")
+    {
+      if(parsedInput.items.length > 1)
+      {
+        ticks = []
+        for(var i = 0; i < parsedInput.items.length; i++)
+          ticks.push(i);
+        tickformat = function (t) {return parsedInput.items[t];};
+        showticks = true;
+      }
+      else
       {
         title = input;
         ticks = [0,1,2,3,4,5,6,7,8,9];
@@ -116,7 +129,7 @@ function getXValues(input)
   {
     title = input;
     ticks = [0,1,2,3,4,5,6,7,8,9];
-    showticks = false;;
+    showticks = false;
   }
   return {title:title, ticks:ticks, showticks:showticks, tickformat:tickformat, istime:istime};
 }
@@ -249,10 +262,10 @@ function createGraph(xval,yval,seed)
 
   //var colors = randomElementFromArray(COLORS[series.length-1]);
   var colorscheme = randomElementFromArray(Object.keys(colorbrewer));
-  console.log(colorscheme);
-  var colors = correctColors(colorbrewer[colorscheme][Math.max(3,series.length)]);
 
-  var chartType = randomElementFromArray(CHARTTYPE);
+  var colors = correctColors(colorbrewer[colorscheme][Math.max(3,series.length)]);
+  
+  var chartType = (xValues.showticks && xValues.istime)?randomElementFromArray(CHARTTYPE):CHARTTYPE[0];
 
   renderGraph(xValues,yValues,series,colors,chartType,"#graph");
 }

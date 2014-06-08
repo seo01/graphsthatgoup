@@ -42,8 +42,10 @@ var animateOut = null;
       scale = xAxis.scale(x0)
         .orient("bottom")
         .tickSize(0);
-      if(xValues.tickformat)
+      if(xValues.tickformat && xValues.istime)
         scale.tickFormat(d3.time.format(xValues.tickformat));
+      if(xValues.tickformat && !xValues.istime)
+        scale.tickFormat(xValues.tickformat);
       if(!xValues.showticks)
         scale.tickValues([]);
     }
