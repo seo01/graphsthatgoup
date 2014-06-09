@@ -1,1 +1,1 @@
-Graphs that go up, a parody website by Simon Overell.
+Graphs that go up, a parody website by Simon Overell. Original concept by Simon Overell and David Palfrey over a beer or two.

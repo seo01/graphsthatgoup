@@ -54,3 +54,47 @@ Blues:  {3: ['rgb(222,235,247)', 'rgb(158,202,225)', 'rgb(49,130,189)'], 4: ['rg
 PuBuGn:  {3: ['rgb(236,226,240)', 'rgb(166,189,219)', 'rgb(28,144,153)'], 4: ['rgb(246,239,247)', 'rgb(189,201,225)', 'rgb(103,169,207)', 'rgb(2,129,138)'], 5: ['rgb(246,239,247)', 'rgb(189,201,225)', 'rgb(103,169,207)', 'rgb(28,144,153)', 'rgb(1,108,89)'], 6: ['rgb(246,239,247)', 'rgb(208,209,230)', 'rgb(166,189,219)', 'rgb(103,169,207)', 'rgb(28,144,153)', 'rgb(1,108,89)'], 7: ['rgb(246,239,247)', 'rgb(208,209,230)', 'rgb(166,189,219)', 'rgb(103,169,207)', 'rgb(54,144,192)', 'rgb(2,129,138)', 'rgb(1,100,80)'], 8: ['rgb(255,247,251)', 'rgb(236,226,240)', 'rgb(208,209,230)', 'rgb(166,189,219)', 'rgb(103,169,207)', 'rgb(54,144,192)', 'rgb(2,129,138)', 'rgb(1,100,80)'], 9: ['rgb(255,247,251)', 'rgb(236,226,240)', 'rgb(208,209,230)', 'rgb(166,189,219)', 'rgb(103,169,207)', 'rgb(54,144,192)', 'rgb(2,129,138)', 'rgb(1,108,89)', 'rgb(1,70,54)'], 'properties':{'type': 'seq','blind':[1],'print':[1,2,2,0,0,0,0],'copy':[1,2,0,0,0,0,0],'screen':[1,1,2,0,0,0,0] } } 
 
 }
+
+//REMOVE LIGHT COLORS
+function is_dark_color(color)
+{
+    var vals = color.substring(4,color.length-1).split(",");
+    for(var j = 0; j < vals.length; j++)
+    {
+      if(vals[j] < 160)
+      {
+        return true;
+      }
+    }
+    return false;
+}
+
+function dark_colors_array()
+{
+	var colors = [[],[],[],[],[],[],[],[],[],[],[],[]];
+	var keys = Object.keys(colorbrewer);//TODO
+	for(var i = 0; i < keys.length; i++)
+	{
+		for(var j = 3; j <=12; j++)
+		{
+			if(colorbrewer[keys[i]][j])
+			{
+				var color_list = colorbrewer[keys[i]][j];
+				var dark_color_list = [];
+				for(var k = 0; k < color_list.length; k++)
+				{
+					var color = color_list[k];
+					if(is_dark_color(color))
+					{
+						dark_color_list.push(color);
+					}
+				}
+				if(dark_color_list.length)
+				{
+					colors[dark_color_list.length-1].push(dark_color_list);
+				}
+			}
+		}
+	}
+	console.log(JSON.stringify(colors));
+}

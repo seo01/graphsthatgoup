@@ -260,10 +260,7 @@ function createGraph(xval,yval,seed)
   //yValues is one or more labels 
   var yValues = generateMultiData(xValues.ticks.length,series.length);
 
-  //var colors = randomElementFromArray(COLORS[series.length-1]);
-  var colorscheme = randomElementFromArray(Object.keys(colorbrewer));
-
-  var colors = correctColors(colorbrewer[colorscheme][Math.max(3,series.length)]);
+  var colors = randomElementFromArray(COLORS[series.length-1].concat(COLORS[series.length]).concat(COLORS[series.length+1]));//TODO append the next two colors as well
   
   var chartType = (xValues.showticks && xValues.istime)?randomElementFromArray(CHARTTYPE):CHARTTYPE[0];
 
