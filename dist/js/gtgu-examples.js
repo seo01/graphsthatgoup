@@ -7,5 +7,8 @@ var EXAMPLES =
     ["Number of Cooks","\"Rate of broth spoiling\", \"F-Words\""],
     ["2000 to 2013", "\"Wealth of top 1%\" vs \"# of foodbanks\""],
     ["vaccines","autism"],
-    ["\"Bill Gates\", \"Carlos Slim Helu\", \"Warren Buffet\" and \"Amancio Ortego\"","Billons of dollars"]
+    ["\"Bill Gates\", \"Carlos Slim Helu\", \"Warren Buffet\" and \"Amancio Ortego\"","Billons of dollars"],
+    ["\"Potatoes\", \"Carrots\", \"Bananas\", \"Blueberries\"","Nutritional value"],
+    ["BBC Coverage","UKIP Votes"],
+    ["2008 to 2014", "\"Facebook Users\", \"Twitter Users\", \"Google+ Users\", \"LinkedIn Users\", \"Pinterest Users\""]
   ];

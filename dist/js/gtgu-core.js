@@ -262,7 +262,7 @@ function createGraph(xval,yval,seed)
 
   var colors = randomElementFromArray(COLORS[series.length-1].concat(COLORS[series.length]).concat(COLORS[series.length+1]));//TODO append the next two colors as well
   
-  var chartType = (xValues.showticks && xValues.istime)?randomElementFromArray(CHARTTYPE):CHARTTYPE[0];
+  var chartType = (!xValues.showticks || xValues.istime)?randomElementFromArray(CHARTTYPE):CHARTTYPE[0];
 
   renderGraph(xValues,yValues,series,colors,chartType,"#graph");
 }
