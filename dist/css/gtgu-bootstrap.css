@@ -51,6 +51,6 @@ p, div {
   background: rgba(255, 255, 255, .8);
 }
 
-#final{
-  display:none;
+#sharebutton{
+  opacity:0;
 }

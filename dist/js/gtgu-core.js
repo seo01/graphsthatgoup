@@ -209,7 +209,7 @@ function initGraph()
     createGraph(xval,yval,seed);
     hideInfo();
     scrollToElement('#create');
-    $('#final').show();
+    $('#sharebutton').fadeTo(1000,1);
   }
   else
   {

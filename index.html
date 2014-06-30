@@ -57,11 +57,8 @@
         <h1>Instantly show upward trends.</h1>
         <p>No real data needed. Choose the axes names and create.</p>
         <p>
-          <a onClick="scrollToElement('#create');eventTopCreate();" class="btn btn-success btn-lg" role="button">
-            <span class="glyphicon glyphicon-signal"></span> Build your graph now!
-          </a>
-           <a onclick="createExample();scrollToElement('#create');eventTopExample();" class="btn btn-primary btn-lg" role="button">
-            See an example &raquo;
+          <a onclick="createExample();scrollToElement('#create');eventTopExample();" class="btn btn-primary btn-lg" role="button">
+            <span class="glyphicon glyphicon-signal"></span> See an Example &raquo;
           </a>
         </p>
       </div>
@@ -74,31 +71,39 @@
         <form class="form-inline" role="form">
           <div class="form-group">
             <h3>
-              <span class="label label-primary">X Axis</span>
+              <span class="label label-success">X Axis</span>
               <label class="sr-only" for="xAxis">1980 to 2010</label>
               <input type="text" class="form-control" id="xAxis" placeholder="1980 to 2010">
             </h3>
           </div>
           <div class="form-group">
             <h3>
-              <span class="label label-primary">Y Axis</span>
+              <span class="label label-success">Y Axis</span>
               <label class="sr-only" for="yAxis">Temperature</label>
               <input type="text" class="form-control" id="yAxis" placeholder="Temperature">
             </h3>
           </div>
           <div class="form-group">
             <h3>
-              <a class="btn btn-success" 
-                onclick="reCreateGraph();scrollToElement('#graph');$('#final').slideDown(1000);eventMidCreate();" role="button">
-                <span class="glyphicon glyphicon-signal"></span> Create!
+              <a class="btn btn-warning" 
+                onclick="reCreateGraph();scrollToElement('#create');$('#sharebutton').fadeTo(1000,1);eventMidCreate();" role="button">
+                <span class="glyphicon glyphicon-signal"></span> New Graph!
               </a>
             </h3>
           </div>
           <div class="form-group">
             <h3>
               <a class="btn btn-primary" 
-                onclick="createExample();scrollToElement('#graph');$('#final').slideDown(1000);eventMidExample();" role="button">
-                Example &raquo;
+                onclick="createExample();scrollToElement('#create');$('#sharebutton').fadeTo(1000,1);eventMidExample();" role="button">
+                New Axes &raquo;
+              </a>
+            </h3>
+          </div>
+          <div class="form-group" id="sharebutton">
+            <h3>
+              <!-- Tweet Button -->
+              <a class="btn btn-info" role="button" href="https://twitter.com/intent/tweet?hashtags=graphsthatgoup&text=Check%20out%20this%20graph!&tw_p=tweetbutton&url=http%3A%2F%2Fgraphsthatgoup.com" id="tweetbutton" target="_blank" onclick="eventShare()">
+                <i class="fa fa-twitter fa-lg"></i> Share on Twitter
               </a>
             </h3>
           </div>
@@ -106,7 +111,7 @@
       </p>
 
       <div class="well">
-        <div id="instructions" class="panel panel-default">
+        <div id="instructions" class="panel panel-default" onclick="hideInfo();">
           <div class="panel-body">
             <h5>
               To create your first graph, fill in the x axis box and y axis box. Then click create!<br/><br/>
@@ -121,35 +126,9 @@
         </p>
       </div>
 
-      <div id="final" class="alert alert-info">
-        <form class="form-inline" role="form">
-          <div class="form-group">
-            <h3>
-              <a class="btn btn-success" onclick="reCreateGraph();eventBottomCreate();" role="button">
-                <span class="glyphicon glyphicon-signal"></span> Create again!
-              </a>
-            </h3>
-          </div>
-          <div class="form-group">
-            <h3>
-              <a class="btn btn-primary" onclick="createExample();eventBottomExample();" role="button">
-                See new example &raquo;
-              </a>
-            </h3>
-          </div>
-          <div class="form-group">
-            <h3>
-              <!-- Tweet Button -->
-              <a class="btn btn-info" role="button" href="https://twitter.com/intent/tweet?hashtags=graphsthatgoup&text=Check%20out%20this%20graph!&tw_p=tweetbutton&url=http%3A%2F%2Fgraphsthatgoup.com" id="tweetbutton" target="_blank" onclick="eventShare()">
-                <i class="fa fa-twitter fa-lg"></i> Share on Twitter
-              </a>
-            </h3>
-          </div>
-          <span style="position:relative;top:15px;font-size:smaller;padding-left:5px">
-            <a onclick="showInfo();eventInfo();" id="showinfo">show info</a>
-            <a style="display:none" onclick="hideInfo();eventInfo();" id="hideinfo">hide info</a>
-          </span>
-        </form>
+      <div style="position:relative;font-size:smaller;padding-left:5px;">
+        <a onclick="showInfo();eventInfo();" id="showinfo" style="display:none;color:white;">Show info</a>
+        <a style="color:white;" onclick="hideInfo();eventInfo();" id="hideinfo">Hide info</a>
       </div>
     </div>
 
